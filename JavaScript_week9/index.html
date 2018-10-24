@@ -2,11 +2,27 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <meta name="viewpoint" content="width=device-width, ">
+    <meta name="viewpoint" content="width=device-width, intial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=chrome">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
     <title>Javascript on Steroids</title>
   </head>
   <body>
-
+    <div class="container-1">
+      <h2 class = "text-center">Challenge 1: Your Age in Days</h2>
+      <div class="flex-box-container-1">
+        <div class="">
+            <button class="btn btn-primary float-left" name="button" onclick="AgeinDays()">click me</button>
+        </div>
+        <div class="">
+            <button class="btn btn-danger float-right" name="button" onclick="reset()">reset</button>
+        </div>
+        <div class="flex-box-container-1">
+          <div id="flex-box-result"></div>
+        </div>
+      </div>
+    </div>
+    <script src="static/js/script.js"></script>
   </body>
 </html>
