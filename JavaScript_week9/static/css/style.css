@@ -1,12 +1,10 @@
-h2.challenge1 {
-}
-.container-1{
+.container-1, .container-2, .container-3{
   border: 1px solid black;
   width: 75%;
   margin: 0 auto;
-  text-align:center;
+  text-align: center;
 }
-.flex-box-container-1{
+.flex-box-container-1, .flex-box-container-2, .flex-box-RPS{
   display: flex;
   padding: 10px;
   border: 1px solid black;
@@ -14,8 +12,16 @@ h2.challenge1 {
   flex-direction: row;
   justify-content: space-around;
 }
-.flex-box-container-1 div{
-  padding: 10px;
-  border: 1px solid black;
+.flex-box-container-1 div, .flex-box-container-2 div,{
+  display: flex;
+  border: 1px solid peachpuff;
   align-items: center;
+}
+
+.flex-box-container-2 img{
+  margin: 10px;
+  box-shadow: 15px 10px 8px 1px rgba(107,39,107,1);
+}
+.flex-box-RPS img:hover{
+  box-shadow: 15px 10px 8px 1px rgba(107,39,107,1);
 }
