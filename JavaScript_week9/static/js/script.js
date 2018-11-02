@@ -3,7 +3,7 @@
 function ageInDays() {
   var birthYear = prompt('What year were you born...?');
   var ageInDayss = (2018 - birthYear) * 365;
-  var h1 = doument.createElement('h1');
+  var h1 = document.createElement('h1');
   var textAnswer = document.createTextNode('You are ' + ageInDayss + ' days old.');
   h1.setAttribute('id', 'ageInDays');
   h1.appendChild(textAnswer);
@@ -17,7 +17,7 @@ function reset() {
 //Challenge 2: Cat generator
 function generateCat() {
   var image = document.createElement('img');
-  var div = document.getElementById('flex-cat-gen');
+  var div = document.getElementById('flex-cat-generator');
   image.src = "http://thecatapi.com/api/images/get?format=src&type=gif&size=small";
   div.appendChild(image);
 }
@@ -27,12 +27,17 @@ function rpsGame(yourChoice) {
   console.log(yourChoice);
   var humanChoice, botChoice;
   humanChoice = yourChoice.id;
+
   botChoice = numberToChoice(randToRpsInt());
   console.log('Computer choice:', botChoice);
+
   results = decideWinner(humanChoice, botChoice); //[1,0] human won|bot lost
   console.log(results);
-  message = finalMessage(results); {'You Won!', 'color': 'green'}
-  //rpsFrontEnd(youChoice.id, botChoice, message);
+
+  message = finalMessage(results); //{'You Won!', 'color': 'green'}
+  console.log(message);
+
+  rpsFrontEnd(yourChoice.id, botChoice, message);
 }
 
 function randToRpsInt() {
@@ -64,4 +69,29 @@ function finalMessage([yourScore, computerScore]) {
   } else {
     return {'message': 'You Won!', 'color': 'green'};
   }
+}
+
+function rpsFrontEnd(humanImageChoice, botImageChoice, finalMessage) {
+  var imagesDatabase = {
+    'rock': document.getElementById('rock').src,
+    'paper': document.getElementById('paper').src,
+    'scissors': document.getElementById('scissors').src
+  }
+  //let's remove all the images
+  document.getElementById('rock').remove();
+  document.getElementById('paper').remove();
+  document.getElementById('scissors').remove();
+
+  var humanDiv = document.createElement('div');
+  var botDiv = document.createElement('div');
+  var messageDiv = document.createElement('div');
+
+  humanDiv.innerHTML = "<img src='" + imagesDatabase[humanImageChoice] + "' height=150 width=150 style='box-shadow: 0px 10px 50px rgba(37,50,233,1);'>";
+  messageDiv.innerHTML = "<h1 style='color: " + finalMessage['color'] + "; font-size: 60px; padding:30px; onclick=rpsGame(this);'>" + finalMessage['message'] + "</h1>";
+  botDiv.innerHTML = "<img src='" + imagesDatabase[botImageChoice] + "' height=150 width=150 style='box-shadow: 0px 10px 50px rgba(237,50,37,1);'>";
+
+  document.getElementById('flex-box-RPS-div').appendChild(humanDiv);
+  document.getElementById('flex-box-RPS-div').appendChild(messageDiv);
+  document.getElementById('flex-box-RPS-div').appendChild(botDiv);
+
 }
