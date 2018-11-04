@@ -71,6 +71,7 @@ function finalMessage([yourScore, computerScore]) {
   }
 }
 
+
 function rpsFrontEnd(humanImageChoice, botImageChoice, finalMessage) {
   var imagesDatabase = {
     'rock': document.getElementById('rock').src,
@@ -87,11 +88,30 @@ function rpsFrontEnd(humanImageChoice, botImageChoice, finalMessage) {
   var messageDiv = document.createElement('div');
 
   humanDiv.innerHTML = "<img src='" + imagesDatabase[humanImageChoice] + "' height=150 width=150 style='box-shadow: 0px 10px 50px rgba(37,50,233,1);'>";
-  messageDiv.innerHTML = "<h1 style='color: " + finalMessage['color'] + "; font-size: 60px; padding:30px; onclick=rpsGame(this);'>" + finalMessage['message'] + "</h1>";
+  messageDiv.innerHTML = "<h1 style='color: " + finalMessage['color'] + "; font-size: 60px; padding:30px;'>" + finalMessage['message'] + "</h1>";
   botDiv.innerHTML = "<img src='" + imagesDatabase[botImageChoice] + "' height=150 width=150 style='box-shadow: 0px 10px 50px rgba(237,50,37,1);'>";
 
-  document.getElementById('flex-box-RPS-div').appendChild(humanDiv);
-  document.getElementById('flex-box-RPS-div').appendChild(messageDiv);
-  document.getElementById('flex-box-RPS-div').appendChild(botDiv);
+//  document.getElementById('flex-box-RPS-div').appendChild(humanDiv);
+//  document.getElementById('flex-box-RPS-div').appendChild(messageDiv);
+//  document.getElementById('flex-box-RPS-div').appendChild(botDiv);
 
 }
+
+//function restartRPS() {
+//  document.getElementById('humanDiv').remove();
+//  document.getElementById('messageDiv').remove();
+//  document.getElementById('botDiv').remove();
+
+//  var rockImg = document.createElement('div');
+//  var paperImg = document.createElement('div');
+//  var scissorsImg = document.createElement('div');
+
+//  paperImg.innerHTML = '<img id = "paper" alt="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRT1NceMHSgfHz4VMSLwCKgoeIrVzWtnBVH2AoY7THjzERLNKf" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA2MZr3l3pFlv2cHg6KGUobve2Uf7Zz3rTY7BfEF7IAcjSgO-R" width=250 height=250 onclick="rpsGame(this)">';
+//  rockImg.innerHtML = '<img id="rock" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtG29d2Tg0K92K4giwlPdfYLf55YN8wRN883Asmxk4lD3WX3D" alt="https://cdn.pixabay.com/photo/2014/03/25/15/26/rock-paper-scissors-296854_960_720.png" width=250 height=250 onclick="rpsGame(this)">';
+//  scissorsImg.innerHTML = '<img id="scissors" src="http://www.clker.com/cliparts/8/B/i/M/Y/Z/scissors-md.png" alt="https://speculararts.com/rps/images/scissors.png" width=250 height=250 onclick="rpsGame(this)">';
+
+  //document.getElementById('flex-box-RPS-div').appendChild(rockImg);
+  //document.getElementById('flex-box-RPS-div').appendChild(paperImg);
+  //document.getElementById('flex-box-RPS-div').appendChild(scissorsImg);
+//}
+//restartRPS();
