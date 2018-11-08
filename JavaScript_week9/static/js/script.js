@@ -203,12 +203,14 @@ function randomCard(){
 };
 
 function showCard(card, activePlayer) {
-  let cardImage = document.createElement('img');
-  cardImage.src = 'static/images/'+randomCard()+'.png';
-  document.querySelector(activePlayer['div']).appendChild(cardImage);
-  hitSound.play();
+  if(activePlayer['score'] <= 21) {
+    let cardImage = document.createElement('img');
+    cardImage.src = `static/images/${card}.png`;
+    document.querySelector(activePlayer['div']).appendChild(cardImage);
+    hitSound.play();
+  }
 };
-//carImage.src = `static/images/${card}.png`; concatenation alternative
+//cardImage.src = `static/images/${card}.png`; // BUG:  concatenation"""'static/images/'+randomCard()+'.png';""" alternative //randomCard() creates a different instance or card here and will result in the card image and the card number being different as two instances of randomCard() result form this medium.
 function blackjackHit() {
   let card = randomCard();
   showCard(card, YOU);
@@ -224,18 +226,44 @@ function blackjackStay() {
    let yourImages = document.querySelector('#your-box').querySelectorAll('img');
    let dealerImages = document.querySelector('#dealer-box').querySelectorAll('img');
 
+   for (i=0; i< yourImages.length; i++) {
+     yourImages[i].remove();
+   };
+
    for (i=0; i< dealerImages.length; i++) {
      dealerImages[i].remove();
    };
 
-   for (i=0; i< yourImages.length; i++) {
-     yourImages[i].remove();
-   };
+   YOU['score'] = 0;
+   DEALER['score'] = 0;
+
+   document.querySelector('#your-blackjack-result').textContent = 0;
+   document.querySelector('#dealer-blackjack-result').textContent = 0;
+
+   document.querySelector('#your-blackjack-result').style.color = '#ffffff';
+   document.querySelector('#dealer-blackjack-result').style.color = '#ffffff';
+
  };
 
 function updateScore(card, activePlayer) {
-  activePlayer['score'] += blackjackGame['cardsMap'][card];
+  if(card === 'A') {
+  // If adding 11 keps me below or equal to 21, add 11. Otherwise, add 1
+    if (activePlayer['score'] + blackjackGame['cardsMap'][card][1] <=21) {
+      activePlayer['score'] += blackjackGame['cardsMap'][card][1];
+    } else {
+      activePlayer['score'] += blackjackGame['cardsMap'][card][0];
+    }
+
+  } else {
+    activePlayer['score'] += blackjackGame['cardsMap'][card];
+  }
 };
+
 function showScore(activePlayer) {
+  if (activePlayer['score'] > 21) {
+    document.querySelector(activePlayer['scoreSpan']).textContent = 'BUST!';
+    document.querySelector(activePlayer['scoreSpan']).style.color = 'red';
+  } else {
   document.querySelector(activePlayer['scoreSpan']).textContent = activePlayer['score'];
-}
+  }
+};
