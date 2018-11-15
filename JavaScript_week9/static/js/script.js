@@ -204,7 +204,7 @@ const lossSound = new Audio('static/sound/aww.mp3');
 
 document.querySelector('#blackjack-hit-button').addEventListener('click', blackjackHit);
 document.querySelector('#blackjack-deal-button').addEventListener('click', blackjackDeal);
-document.querySelector('#blackjack-stay-button').addEventListener('click', blackjackStay);
+document.querySelector('#blackjack-stay-button').addEventListener('click', dealerLogic);
 
 function blackjackHit() {
   if (blackjackGame['isStand'] === false) {
@@ -219,6 +219,7 @@ function randomCard() {
     let randomCardIndexNum = Math.floor(Math.random() * 13);
     return blackjackGame['cards'][randomCardIndexNum];
 }
+
 function updateScore(card, activePlayer) {
   if(card === 'A') {
   // If adding 11 keps me below or equal to 21, add 11. Otherwise, add 1
@@ -227,7 +228,6 @@ function updateScore(card, activePlayer) {
     } else {
       activePlayer['score'] += blackjackGame['cardsMap'][card][0];
     }
-
   } else {
     activePlayer['score'] += blackjackGame['cardsMap'][card];
   }
@@ -251,18 +251,22 @@ function showScore(activePlayer) {
   }
 }
 
-function dealerLogic() {
-  blackjackGame['isStand'] = true;
-  let card = randomCard();
-  showCard(card, DEALER);
-  updateScore(card, DEALER);
-  showScore(DEALER);
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-  if (DEALER['score'] > 15) {
-    blackjackGame['turnsOver'] =true;
-    let winner = computeWinner();
-    showResult(winner);
+async function dealerLogic() {
+  blackjackGame['isStand'] = true;
+  while (DEALER['score'] < 16 && blackjackGame['isStand'] === true) {
+    let card = randomCard();
+    updateScore(card, DEALER);
+    showCard(card, DEALER);
+    showScore(DEALER);
+    await sleep(1000);
   }
+
+  blackjackGame['turnsOver'] =true;
+  showResult();
 }
 
 function blackjackDeal() {
@@ -291,32 +295,9 @@ function blackjackDeal() {
 
      document.querySelector('#blackjack-result').textContent = "Let's Play";
      document.querySelector('#blackjack-result').style.color = 'black';
-     blackjackGame['turnsOver'] = true;
-  }
- }
-
-function blackjackStay() {
-   let card = randomCard();
-   showCard(card, DEALER);
-   updateScore(card, DEALER);
-   showScore(DEALER);
- }
-
-function updateScore(card, activePlayer) {
-  if(card === 'A') {
-  // If adding 11 keps me below or equal to 21, add 11. Otherwise, add 1
-    if (activePlayer['score'] + blackjackGame['cardsMap'][card][1] <=21) {
-      activePlayer['score'] += blackjackGame['cardsMap'][card][1];
-    } else {
-      activePlayer['score'] += blackjackGame['cardsMap'][card][0];
-    }
-
-  } else {
-    activePlayer['score'] += blackjackGame['cardsMap'][card];
+     blackjackGame['turnsOver'] = false;
   }
 }
-
-
 
 // compute winner and return who just won
 // update wins losses draws table
@@ -350,7 +331,6 @@ function showResult() {
         message = 'You Tied!';
       }
 
-
     //condition: when user busts but dealer doesn't
     } else if (YOU['score'] > 21 && DEALER['score'] <= 21) {
       blackjackGame['losses']++;
@@ -366,9 +346,7 @@ function showResult() {
       messageColor = 'light green';
       message = 'You Tied!';
     }
-
   }
   document.querySelector('#blackjack-result').textContent = message;
   document.querySelector('#blackjack-result').style.color = messageColor;
-
 }
